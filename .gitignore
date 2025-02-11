@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor & OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Nodemon ignore
+.nodemon-debug.json
+
+# Docker ignore (if using)
+docker-compose.override.yml
+
+# MongoDB data (if using local MongoDB with Docker)
+data/
+dump/
