@@ -12,7 +12,6 @@ services:
     volumes:
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
-      - ../PRW3-server/db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     networks:
       - mongodb_network
 
@@ -34,6 +33,7 @@ services:
 volumes:
   mongodb_data:
   mongodb_config:
+
 
 networks:
   mongodb_network:
