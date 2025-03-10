@@ -1,0 +1,278 @@
+{
+  "info": {
+    "name": "PRW3 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/users"
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/users/{{googleId}}"
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/users",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"googleId\": \"string\",\n  \"email\": \"user@example.com\",\n  \"displayName\": \"User Name\",\n  \"picture\": \"http://example.com/picture.jpg\",\n  \"friends\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8000/api/users/{{googleId}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"updated@example.com\",\n  \"displayName\": \"Updated Name\",\n  \"picture\": \"http://example.com/new-picture.jpg\",\n  \"friends\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8000/api/users/{{googleId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groups",
+      "item": [
+        {
+          "name": "Get All Groups",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/groups"
+          }
+        },
+        {
+          "name": "Get Group by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/groups/{{groupId}}"
+          }
+        },
+        {
+          "name": "Create Group",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/groups",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Group Name\",\n  \"members\": [\"userId1\", \"userId2\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Group",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8000/api/groups/{{groupId}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Group Name\",\n  \"members\": [\"userId1\", \"userId2\", \"userId3\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Group",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8000/api/groups/{{groupId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Get Messages by Group",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/messages/group/{{groupId}}"
+          }
+        },
+        {
+          "name": "Create Message",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/messages",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"groupId\": \"string\",\n  \"senderId\": \"string\",\n  \"content\": \"Message content\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Message",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8000/api/messages/{{messageId}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated message content\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8000/api/messages/{{messageId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Points of Interest",
+      "item": [
+        {
+          "name": "Get All Points",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/points"
+          }
+        },
+        {
+          "name": "Get Nearby Points",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/points/nearby?longitude={{longitude}}&latitude={{latitude}}&maxDistance={{maxDistance}}"
+          }
+        },
+        {
+          "name": "Get Point by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/api/points/{{pointId}}"
+          }
+        },
+        {
+          "name": "Create Point",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/points",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Point Name\",\n  \"location\": {\n    \"type\": \"Point\",\n    \"coordinates\": [0, 0]\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Point",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8000/api/points/{{pointId}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Point Name\",\n  \"location\": {\n    \"type\": \"Point\",\n    \"coordinates\": [0, 0]\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Point",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8000/api/points/{{pointId}}"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "googleId",
+      "value": "your-google-id"
+    },
+    {
+      "key": "groupId",
+      "value": "your-group-id"
+    },
+    {
+      "key": "messageId",
+      "value": "your-message-id"
+    },
+    {
+      "key": "pointId",
+      "value": "your-point-id"
+    },
+    {
+      "key": "longitude",
+      "value": "0"
+    },
+    {
+      "key": "latitude",
+      "value": "0"
+    },
+    {
+      "key": "maxDistance",
+      "value": "5000"
+    }
+  ]
+}
