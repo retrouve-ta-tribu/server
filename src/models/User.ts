@@ -16,15 +16,11 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   picture: {
-    type: String,
-    required: true
+    type: String
   },
   friends: [{
     type: String
   }]
 }, { timestamps: true });
-
-userSchema.index({ googleId: 1 });
-userSchema.index({ email: 1 });
 
 export const User = mongoose.model('User', userSchema);
