@@ -62,3 +62,70 @@ export const deleteUser: RequestHandler<{ id: string }> = async (req, res) => {
         res.status(500).json({ message: "Error deleting user" });
     }
 };
+
+export const addFriend: RequestHandler<{ id: string }> = async (req, res) => {
+    try {
+        const { friendId, email } = req.body;
+        const user = await User.findOne({ googleId: req.params.id });
+        
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+
+        const friend = friendId 
+            ? await User.findOne({ googleId: friendId })
+            : await User.findOne({ email });
+
+        if (!friend) {
+            res.status(404).json({ message: "Friend not found" });
+            return;
+        }
+
+        if (user.friends.includes(friend.googleId)) {
+            res.status(400).json({ message: "Already friends" });
+            return;
+        }
+
+        user.friends.push(friend.googleId);
+        await user.save();
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Error adding friend" });
+    }
+};
+
+export const removeFriend: RequestHandler<{ id: string }> = async (req, res) => {
+    try {
+        const { friendId, email } = req.body;
+        const user = await User.findOne({ googleId: req.params.id });
+        
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+
+        const friend = friendId 
+            ? await User.findOne({ googleId: friendId })
+            : await User.findOne({ email });
+
+        if (!friend) {
+            res.status(404).json({ message: "Friend not found" });
+            return;
+        }
+
+        const friendIndex = user.friends.indexOf(friend.googleId);
+        if (friendIndex === -1) {
+            res.status(400).json({ message: "Not friends" });
+            return;
+        }
+
+        user.friends.splice(friendIndex, 1);
+        await user.save();
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Error removing friend" });
+    }
+};
