@@ -5,6 +5,8 @@ import {
     createUser,
     updateUser,
     deleteUser,
+    addFriend,
+    removeFriend
     getUserGroups
 } from "../controllers/userController";
 
@@ -16,5 +18,7 @@ router.get("/:id/groups", getUserGroups);
 router.post("/", createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
+router.post("/:id/friends", addFriend);
+router.delete("/:id/friends", removeFriend);
 
 export default router;
