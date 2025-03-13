@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { User } from "../models/User";
+import { Group } from "../models/Group";
 
 export const getAllUsers: RequestHandler = async (_req, res) => {
     try {
@@ -60,5 +61,14 @@ export const deleteUser: RequestHandler<{ id: string }> = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: "Error deleting user" });
+    }
+};
+
+export const getUserGroups: RequestHandler<{ id: string }> = async (req, res) => {
+    try {
+        const groups = await Group.find({ members: req.params.id });
+        res.json(groups);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user's groups" });
     }
 };
