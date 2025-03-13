@@ -83,6 +83,11 @@ export const addFriend: RequestHandler<{ id: string }> = async (req, res) => {
             return;
         }
 
+        if (user.googleId === friend.googleId) {
+            res.status(400).json({ message: "Cannot add yourself as a friend" });
+            return;
+        }
+
         if (user.friends.includes(friend.googleId)) {
             res.status(400).json({ message: "Already friends" });
             return;
