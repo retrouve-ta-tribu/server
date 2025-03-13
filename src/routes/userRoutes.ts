@@ -7,12 +7,14 @@ import {
     deleteUser,
     addFriend,
     removeFriend
+    getUserGroups
 } from "../controllers/userController";
 
 const router = express.Router();
 
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
+router.get("/:id/groups", getUserGroups);
 router.post("/", createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
