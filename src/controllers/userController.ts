@@ -128,6 +128,9 @@ export const removeFriend: RequestHandler<{ id: string }> = async (req, res) => 
         res.json(user);
     } catch (error) {
         res.status(500).json({ message: "Error removing friend" });
+    }
+};
+
 export const getUserGroups: RequestHandler<{ id: string }> = async (req, res) => {
     try {
         const groups = await Group.find({ members: req.params.id });

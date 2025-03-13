@@ -6,7 +6,7 @@ import {
     updateUser,
     deleteUser,
     addFriend,
-    removeFriend
+    removeFriend,
     getUserGroups
 } from "../controllers/userController";
 
