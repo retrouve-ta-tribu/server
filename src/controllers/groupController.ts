@@ -104,9 +104,16 @@ export const removeUserFromGroup: RequestHandler<{ id: string; userId: string }>
     }
 
     group.members = group.members.filter(memberId => memberId !== user.googleId);
-    await group.save();
+    
+    // Check if the group is now empty and delete it if so
+    if (group.members.length === 0) {
+      await Group.findByIdAndDelete(req.params.id);
+      res.json({ message: "User removed and empty group deleted successfully" });
+    } else {
 
-    res.json({ message: "User removed from group successfully" });
+      await group.save();
+      res.json({ message: "User removed from group successfully" });
+    }
   } catch (error) {
     res.status(500).json({ message: "Error removing user from group" });
   }
