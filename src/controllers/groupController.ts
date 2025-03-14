@@ -118,3 +118,25 @@ export const removeUserFromGroup: RequestHandler<{ id: string; userId: string }>
     res.status(500).json({ message: "Error removing user from group" });
   }
 };
+
+export const getGroupMembers: RequestHandler<{ id: string }> = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id);
+    
+    if (!group) {
+      res.status(404).json({ message: "Group not found" });
+      return;
+    }
+
+    const members = [];
+
+    for (const member of group.members) {
+      const user = await User.findOne({ googleId: member });
+      members.push(user);
+    }
+
+    res.json(members);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching group members" });
+  }
+};
