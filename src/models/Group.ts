@@ -8,6 +8,10 @@ const groupSchema = new mongoose.Schema({
   members: [{
     type: String,
     required: true
+  }],
+  pointsOfInterest: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PointOfInterest'
   }]
 }, { timestamps: true });
 
