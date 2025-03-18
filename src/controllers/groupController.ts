@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { Group } from '../models/Group';
 import { User } from '../models/User';
+import { PointOfInterest } from '../models/PointOfInterest';
 
 export const getAllGroups: RequestHandler = async (_req, res) => {
   try {
@@ -138,5 +139,70 @@ export const getGroupMembers: RequestHandler<{ id: string }> = async (req, res) 
     res.json(members);
   } catch (error) {
     res.status(500).json({ message: "Error fetching group members" });
+  }
+};
+
+export const getGroupPointsOfInterest: RequestHandler<{ id: string }> = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id).populate('pointsOfInterest');
+    
+    if (!group) {
+      res.status(404).json({ message: "Group not found" });
+      return;
+    }
+
+    res.json(group.pointsOfInterest);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching group points of interest" });
+  }
+};
+
+export const addPointOfInterestToGroup: RequestHandler<{ id: string }> = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id);
+
+    if (!group) {
+      res.status(404).json({ message: "Group not found" });
+      return;
+    }
+
+    const point = new PointOfInterest(req.body);
+    await point.save();
+
+    group.pointsOfInterest.push(point._id);
+    await group.save();
+
+    res.status(201).json({
+      message: "Point of interest created and added to group successfully",
+      point: point
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Error creating and adding point of interest to group" });
+  }
+};
+
+export const removePointOfInterestFromGroup: RequestHandler<{ id: string; pointId: string }> = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id);
+
+    if (!group) {
+      res.status(404).json({ message: "Group not found" });
+      return;
+    }
+
+    const pointIdStr = req.params.pointId.toString();
+    const pointExists = group.pointsOfInterest.some(poi => poi.toString() === pointIdStr);
+    
+    if (!pointExists) {
+      res.status(400).json({ message: "Point of interest not in group" });
+      return;
+    }
+
+    group.pointsOfInterest = group.pointsOfInterest.filter(poi => poi.toString() !== pointIdStr);
+    await group.save();
+
+    res.json({ message: "Point of interest removed from group successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error removing point of interest from group" });
   }
 };

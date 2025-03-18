@@ -7,7 +7,10 @@ import {
   deleteGroup,
   addUserToGroup,
   removeUserFromGroup,
-  getGroupMembers
+  getGroupMembers,
+  getGroupPointsOfInterest,
+  addPointOfInterestToGroup,
+  removePointOfInterestFromGroup
 } from '../controllers/groupController';
 
 const router = express.Router();
@@ -20,5 +23,10 @@ router.delete('/:id', deleteGroup);
 router.get("/:id/members", getGroupMembers);
 router.post('/:id/members/:userId', addUserToGroup);
 router.delete('/:id/members/:userId', removeUserFromGroup);
+
+// Points of interest routes
+router.get('/:id/points', getGroupPointsOfInterest);
+router.post('/:id/points', addPointOfInterestToGroup);
+router.delete('/:id/points/:pointId', removePointOfInterestFromGroup);
 
 export default router;
